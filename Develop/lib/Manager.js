@@ -11,7 +11,7 @@ class Manager extends Employee {
 
         return this.role
     }
-    getOffice(){
+    getOfficeNumber(){
         console.log(`${this.officeNumber}`);
 
         return this.officeNumber
