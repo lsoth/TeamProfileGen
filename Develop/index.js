@@ -3,16 +3,19 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const fs = require ('fs');
+const util = require('util')
 const inquirer = require('inquirer');
 
-//  const generateHTML = require('./utils/generateHTML');
+//used to generate html with team member cards
+const generateHTML = require('./util/generateHTML');
 
+const writeHTML = util.promisify(fs.writeFile)
  
- 
-//
 
+//array of objects of all employees
 const allEmployees = [];
- 
+
+// on start, prompts user to answer questions about team members
 const init = async () => {
      const{name,id,email,role} = await inquirer.prompt([
      {
@@ -38,6 +41,8 @@ const init = async () => {
          choices:['Manager', 'Engineer', 'Intern']
      }
     ])
+    //switch cases used depending on what the role on the team is
+    //also adds team member to allEmployees array
         switch (role) {
             case 'Manager':
                 const {officeNumber} = await inquirer.prompt({
@@ -72,6 +77,7 @@ const init = async () => {
             default:
                 break;
         }
+    //verifies the amount of team members
     const {moreEmployees} = await inquirer.prompt({
         type:'confirm',
         name:'moreEmployees',
@@ -80,7 +86,9 @@ const init = async () => {
     if(moreEmployees){
         init()
     } else {
-        console.log(allEmployees);
+        // console.log(allEmployees);
+        const newHTML = generateHTML(allEmployees);
+        await writeHTML(`index.html`, newHTML)
     }
 }
  
