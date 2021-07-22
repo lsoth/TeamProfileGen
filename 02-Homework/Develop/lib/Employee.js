@@ -19,9 +19,11 @@ class Employee {
     }
 }
 
-const bill = new Employee("Bill", 1, "bill.bill@bill.com");
+// const bill = new Employee("Bill", 1, "bill.bill@bill.com");
 
-bill.getName();
-bill.getEmail();
-bill.getID();
+// bill.getName();
+// bill.getEmail();
+// bill.getID();
+
+module.exports = Employee
 
